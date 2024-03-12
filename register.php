@@ -1,8 +1,8 @@
-<?Php 
-    require 'include/header.php';
-?>
-
 <?php
+session_start();
+require_once 'function.php';
+
+
     if(!empty($_POST)){
 
         $errors = array();
@@ -48,11 +48,16 @@
             $req->execute([$_POST['username'], $_POST['email'], $password, $token]);
             $user_id = $pdo->lastInsertId();
             mail($_POST['email'], 'confirmation de votre compte',"Afin de valider votre compter Merci de cliquer sur ce lien\n\nhttp://localhost/donnie/Gestion_inscription/confirm.php?id=$user_id&token=$token");
+            
+            $_SESSION['flash']['success'] = 'Un email de confirmation vous a ete envoyer ';
             header('location: login.php');
             exit();
         }
     } 
 ?>
+
+
+<?Php require 'include/header.php' ;?>
 
     <h1>S'inscrire</h1>
 
